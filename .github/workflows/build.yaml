@@ -25,3 +25,9 @@ jobs:
             dist/PeglinCore.dll
             build/*.zip
           if-no-files-found: error
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref_type == tag
+    steps:
+      - run: echo "It's a tag!"
