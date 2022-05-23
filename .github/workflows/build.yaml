@@ -30,4 +30,21 @@ jobs:
     needs: build
     if: github.ref_type == 'tag'
     steps:
-      - run: echo "It's a tag!"
+      - uses: dawidd6/action-get-tag@v1
+        with:
+          strip_v: true
+      - uses: mavrosxristoforos/get-xml-info@1.0
+        with:
+          xml-file: PeglinCore.csproj
+          xpath: //Project/PropertyGroup/Version
+      - name: Get thunderstore.toml version
+        run: |
+          version=$(grep "versionNumber" thunderstore.toml | cut -d" " -f3 | tr -d '"')
+          echo "toml_version=$version" >> $GITHUB_ENV
+      # get version from thunderstore.toml
+      # if not actions match, trigger failure
+      - name: Validate versions
+        if: steps.tag.outputs.tag != steps.getxml.outputs.info || steps.tag.outputs.tag != env.toml_version
+        uses: actions/github-script@v3
+        with:
+          script: core.setFailed('Release version mismatch!')
