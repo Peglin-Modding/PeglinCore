@@ -21,9 +21,7 @@ jobs:
         run: tcli build
       - uses: actions/upload-artifact@v3
         with:
-          path: |
-            dist/PeglinCore.dll
-            build/*.zip
+          path: dist/
           if-no-files-found: error
   prerelease:
     runs-on: ubuntu-latest
