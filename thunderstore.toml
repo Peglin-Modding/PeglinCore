@@ -12,7 +12,7 @@ containsNsfwContent = false
 [build]
 icon = "./icon.png"
 readme = "./README.md"
-outdir = "./build"
+outdir = "./dist"
 
 [[build.copy]]
 source = "./dist"
