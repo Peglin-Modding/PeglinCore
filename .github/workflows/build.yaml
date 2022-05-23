@@ -17,7 +17,7 @@ jobs:
       - run: dotnet build -c Release .
       - run: mkdir dist && cp bin/Release/net46/PeglinCore.dll dist/
       - name: Build thunderstore package
-        uses: thunderstore-io/github-actions@v1
+        uses: thunderstore-io/github-actions@v1.0.0
         with:
           subcommand: "build"
       - uses: actions/upload-artifact@v3
