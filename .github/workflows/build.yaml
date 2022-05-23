@@ -30,6 +30,7 @@ jobs:
     needs: build
     if: github.ref_type == 'tag'
     steps:
+      - uses: actions/checkout@v2
       - uses: dawidd6/action-get-tag@v1
         with:
           strip_v: true
