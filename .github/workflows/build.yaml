@@ -1,0 +1,28 @@
+name: Build
+
+on: 
+  push:
+    branches:
+      - main
+      - github-actions
+    tags:
+      - v*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1.7.2
+      - run: dotnet build -c Release .
+      - run: mkdir dist && cp bin/Release/net46/PeglinCore.dll dist/
+      - name: Build thunderstore package
+        uses: thunderstore-io/github-actions@v1
+        with:
+          subcommand: "build"
+      - uses: actions/upload-artifact@v3
+        with:
+          path: |
+            dist/PeglinCore.dll
+            build/*.zip
+          if-no-files-found: error
