@@ -32,9 +32,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: dawidd6/action-get-tag@v1
+        id: tag
         with:
           strip_v: true
       - uses: mavrosxristoforos/get-xml-info@1.0
+        id: csproj
         with:
           xml-file: PeglinCore.csproj
           xpath: //Project/PropertyGroup/Version
@@ -43,7 +45,7 @@ jobs:
           version=$(grep "versionNumber" thunderstore.toml | cut -d" " -f3 | tr -d '"')
           echo "toml_version=$version" >> $GITHUB_ENV
       - run: |
-          echo "Validating versions (tag: ${{ steps.tag.outputs.tag }}, csproj: ${{ steps.getxml.outputs.info }}, toml: ${{ env.toml_version }})"
+          echo "Validating versions (tag: ${{ steps.tag.outputs.tag }}, csproj: ${{ steps.csproj.outputs.info }}, toml: ${{ env.toml_version }})"
       - name: Validate versions
         if: steps.tag.outputs.tag != steps.getxml.outputs.info || steps.tag.outputs.tag != env.toml_version
         uses: actions/github-script@v3
