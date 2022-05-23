@@ -53,8 +53,10 @@ jobs:
         with:
           script: core.setFailed('Release version mismatch!')
       - uses: actions/download-artifact@v3
+        if: success()
         with:
           name: dist
+          path: dist/
       - name: Prerelease
         if: success()
         uses: softprops/action-gh-release@v1
