@@ -1,0 +1,20 @@
+name: Release
+
+on:
+  release:
+    types: [released]
+    
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1.7.2
+      - run: dotnet tool install --global tcli --version 0.1.4
+      - uses: dsaltares/fetch-gh-release-asset@1.0.0
+        id: asset
+        with:
+          file: PeglinCore-PeglinCore-.*\\.zip
+          regex: true
+          version: ${{ github.release.tag_name }}
+      - run: tcli publish --file PeglinCore-PeglinCore-${{ steps.asset.outputs.version }}.zip
