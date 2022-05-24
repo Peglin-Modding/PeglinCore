@@ -17,5 +17,5 @@ jobs:
         with:
           file: PeglinCore-PeglinCore-.*\\.zip
           regex: true
-          version: ${{ github.release.tag_name }}
+          version: ${{ github.event.release.tag_name }}
       - run: tcli publish --file PeglinCore-PeglinCore-${{ steps.asset.outputs.version }}.zip
