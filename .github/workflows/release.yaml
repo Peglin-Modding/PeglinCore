@@ -14,4 +14,4 @@ jobs:
       - uses: hmarr/debug-action@v2
       - run: echo "Downloading asset ${{ github.event.release.assets[0].browser_download_url }}"
       - run: wget ${{ github.event.release.assets[0].browser_download_url }}
-      - run: tcli publish --file PeglinCore-PeglinCore-*.zip
+      - run: tcli publish --file PeglinCore-PeglinCore-*.zip --token ${{ secrets.THUNDERSTORE_TOKEN }}
