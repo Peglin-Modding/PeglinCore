@@ -16,10 +16,11 @@ namespace PeglinCore
             harmony.PatchAll();
             Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
         }
+    }
 
-        [HarmonyPatch(typeof(PeglinUI.LoadoutManager.LoadoutManager), "SetupDataForNewGame")]
-        [HarmonyPostfix]
-        static private void PatchSetupDataForNewGame() {
+    [HarmonyPatch(typeof(PeglinUI.LoadoutManager.LoadoutManager), "SetupDataForNewGame")]
+    class AchievementsPatch {
+        static private void Postfix() {
             AchievementManager.AchievementsOn = false;
         }
     }
